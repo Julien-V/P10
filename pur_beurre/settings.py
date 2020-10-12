@@ -186,3 +186,23 @@ if os.environ.get('IS_HEROKU', None):
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
+
+# Other prod :
+if os.environ.get('IS_PROD', None):
+    ALLOWED_HOSTS.append('localhost')
+    ip_host = os.environ.get('IP_HOST_DJ', None)
+    if ip_host:
+        ALLOWED_HOSTS.append(ip_host)
+    DEBUG = False
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'pur_beurre',
+            'USER': 'julien',
+            'PASSWORD': os.environ.get('DB_PW', ''),
+            'HOST': 'localhost',
+            'PORT': ''
+        }
+    }
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
