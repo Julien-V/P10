@@ -1,0 +1,23 @@
+{% extends "base_results.html" %}
+
+{% block page_content_extended %}
+<section class="page-section bg-primary" id="product">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<img type="image/png" src="{{ ng_image }}"/>
+			</div>
+			<div class="col-lg-6">
+				<h3>Repères nutritionnels pour 100g :</h3>
+				<p>{{ req100.fat_100g }}g matières grasses/lipides</p>
+				<p>{{ req100.saturatedfat_100g }}g d'acides gras saturés</p>
+				<p>{{ req100.sugars_100g }}g de sucres</p>
+				<p>{{ req100.salt_100g }}g de sel</p>
+			</div>
+		</div>
+		<div class="text-center">
+			<a href="{{ product_searched.url }}"><button>Voir la fiche d'OpenFoodFacts</button></a>
+		</div>
+	</div>
+</section>
+{% endblock %}

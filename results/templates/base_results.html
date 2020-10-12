@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+{% if product_searched %}
+<header class="masthead" id="masthead-product" style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.67) 0%, rgba(0, 0, 0, 0.67) 100%), url('{{ product_searched.image_url }}');">
+{% else %}
+<header class="masthead" id="masthead-product" style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.67) 0%, rgba(0, 0, 0, 0.67) 100%), url('/static/assets/img/bg-masthead.jpg');">
+{% endif %}
+	<div class="container h-100">
+		<div class="row h-50 align-items-center justify-content-center text-center">
+			<div class="col-lg-10 align-self-end">
+				<h1 class="text-uppercase text-white font-weight-bold">{{ masthead_title }}</h1>
+			</div>
+		</div>
+	</div>
+</header>
+{% block page_content_extended %}
+{% endblock %}
+{% endblock %}

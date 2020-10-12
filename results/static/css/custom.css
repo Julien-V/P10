@@ -1,0 +1,99 @@
+:root {
+	--ng_a: green;
+	--ng_b: lightgreen;
+	--ng_c: yellow;
+	--ng_d: orange;
+	--ng_e: red;
+	--moules-frites: #345a61;
+	--moules-frites-a: #345a61b5;
+	--rooibos-chocolat: #c45525;
+	--rigolo: #86ebe6;
+	--rigolo-a: #86ebe6b5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Open Sans";
+}
+
+p, a {
+	font-family: "Scope One";
+}
+
+#logo-img {
+	max-width: 10%;
+}
+
+#navbar-icon {
+	font-size: x-large;
+}
+
+#navbar-input {
+	background-color: lightgray;
+	text-align: center;
+}
+
+#contact-icon {
+	font-size: xxx-large;
+}
+
+#masthead-product {
+	background-size: initial;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+@media (min-width: 992px) {
+  #masthead-product {
+    height: 20vh;
+    min-height: 20rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+}
+
+#remy-img, #colette-img {
+	height: 200px;
+}
+
+#product-img {
+	width: 60%;
+}
+
+#product-save-icon {
+	color: #f4623a;
+}
+
+#nutrition-grades-bubble {
+	position: absolute;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	top:-10px;
+	right:-5px;
+	padding: 5px 15px;
+	text-transform: uppercase;
+	-webkit-text-stroke: 1px #000000d1;
+	font-size: xx-large;
+	font-family: "Open Sans";
+}
+
+.btn-subs-submit {
+	background: none!important;
+  	border: none;
+  	padding: 0!important;
+  	cursor: pointer;
+}
+
+#product-col {
+	padding-bottom: 10%;
+}
+
+#connection-div {
+	background-color: var(--rigolo-a);
+	border-radius: 1%;
+	color: var(--rooibos-chocolat);
+}
+
+#connection-form, #register-form {
+	font-weight: bold;
+}

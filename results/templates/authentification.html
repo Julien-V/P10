@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<header class="masthead">
+	<div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div id="connection-div" class="col-lg-10 align-self-top">
+            	<h1 class="text-left">Connexion</h1>
+            	<br>
+            	{% if error %}
+				<p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+				{% endif %}
+				{% if user.is_authenticated %}
+				<p><strong>Vous êtes connecté, {{ user.username }} !></strong></p>
+				{% else %}
+				<form id="connection-form" method="post" action="./log_in">
+    				{% csrf_token %}
+    				{{ form.as_p }}
+    				<input type="submit" value="Connexion"/>
+				</form>
+				<a href="./sign_in"><strong>S'inscrire</strong></a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</header>
+{% endblock %}
