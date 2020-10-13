@@ -16,12 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-def div_by_zero(request):
-	# test sentry
-	resu = 1/0
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('results.urls')),
-    path('dzdz', div_by_zero)
 ]
