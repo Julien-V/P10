@@ -2,15 +2,17 @@
 # coding : utf-8
 
 from . import *
+import os
 
-# config db for travis
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+if os.environ.get("IS_TRAVIS", None):
+	# config db for travis
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.postgresql',
+	        'NAME': '',
+	        'USER': 'postgres',
+	        'PASSWORD': '',
+	        'HOST': '',
+	        'PORT': '',
+	    }
+	}
