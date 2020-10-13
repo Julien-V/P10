@@ -3,6 +3,7 @@
 
 from . import *
 
+# config db for travis
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
