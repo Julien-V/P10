@@ -23,5 +23,5 @@ def div_by_zero(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('results.urls')),
-    path('dzdz', dzdz)
+    path('dzdz', div_by_zero)
 ]
