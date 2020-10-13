@@ -1,0 +1,18 @@
+language: python
+python:
+  - '3.8'
+
+branches:
+  only:
+    - staging
+
+before_script:
+  - pip install -r requirements.txt
+
+services:
+  - postgresql
+
+env: DJANGO_SETTINGS_MODULE=pur_beurre.travis
+
+script:
+  - pytest
