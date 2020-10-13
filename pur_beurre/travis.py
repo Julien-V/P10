@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # coding : utf-8
 
-from . import *
+from .settings import *
 import os
 
 if os.environ.get("IS_TRAVIS", None):
