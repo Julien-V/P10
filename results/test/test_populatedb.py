@@ -47,3 +47,20 @@ class TestPopulateDB():
             popdb.handle()
         prods = Product.objects.all()
         assert len(prods) == 1
+
+    @pytest.mark.django_db
+    def test_popu_update(self, django_db_blocker, patch_get_and_load):
+        # 2 products
+        with django_db_blocker.unblock():
+            popdb = Command(self.off_api_test)
+            patch_get_and_load.values = j("populatedb_valid.json")
+            popdb.handle()
+        # update 1st prod
+        with django_db_blocker.unblock():
+            popdb = Command(self.off_api_test)
+            patch_get_and_load.values = j('populatedb_update.json')
+            popdb.handle(**{"update": True})
+        prods = Product.objects.all()
+        prod = prods[1]
+        assert prod.nutrition_grades == "b"
+        assert isinstance(prod.updated_timestamp, int)

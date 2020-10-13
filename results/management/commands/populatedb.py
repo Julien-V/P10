@@ -12,7 +12,7 @@ from results.models import CategoriesProducts as db_cat_prod
 
 
 class Command(BaseCommand):
-    help = 'Fill DB with OpenFoodFacts data'
+    help = "Fill DB with OpenFoodFacts data"
 
     def __init__(self, args=off_api):
         self.url = args['url']
@@ -22,6 +22,12 @@ class Command(BaseCommand):
         self.fields = args['fields']
         self.req100 = args['req100']
         self.count = 0
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--update',
+            action="store_true",
+            help="Update DB with OpenFoodFacts data")
 
     def keep_nutri_g_only(self):
         """This method keeps only products with nutrition grades"""
@@ -54,45 +60,67 @@ class Command(BaseCommand):
             result = None
         return result
 
+    def clean_product(self, product):
+        prod_dict = dict()
+        for key in product.keys():
+            if key in self.fields:
+                prod_dict[key] = product[key]
+        # code should be int not str
+        if 'code' in prod_dict.keys():
+            if isinstance(prod_dict["code"], str):
+                prod_dict["code"] = int(prod_dict["code"])
+        # Get req100 from 'nutriments'
+        if 'nutriments' in prod_dict.keys():
+            req100_temp = dict()
+            for key in self.req100:
+                if key in prod_dict['nutriments']:
+                    req100_temp[key] = prod_dict['nutriments'][key]
+            req100 = json.dumps(req100_temp)
+            prod_dict['req100'] = req100
+            prod_dict.pop('nutriments', None)
+        return prod_dict
+
     def insert_in_db(self, cat):
         for product in self.result_list:
-            prod_dict = dict()
-            for key in product.keys():
-                if key in self.fields:
-                    prod_dict[key] = product[key]
-            # code should be int not str
-            if 'code' in prod_dict.keys():
-                if isinstance(prod_dict["code"], str):
-                    prod_dict["code"] = int(prod_dict["code"])
-            # Get req100 from 'nutriments'
-            if 'nutriments' in prod_dict.keys():
-                req100_temp = dict()
-                for key in self.req100:
-                    if key in prod_dict['nutriments']:
-                        req100_temp[key] = prod_dict['nutriments'][key]
-                req100 = json.dumps(req100_temp)
-                prod_dict['req100'] = req100
-                prod_dict.pop('nutriments', None)
-            # add creation timestamp
+            prod_dict = self.clean_product(product)
             ts = datetime.datetime.now().timestamp()
-            prod_dict['added_timestamp'] = int(ts)
-            # insert into Product
-            prod_db = db_prod(**prod_dict)
             try:
-                prod_db.clean()
-                prod_db.save()
-                cat_prod = db_cat_prod(
-                    category_id=cat.id,
-                    product_id=prod_db.id
-                )
-                cat_prod.save()
-            except ValidationError as e:
-                print(e)
+                try:
+                    prod_db = db_prod.objects.get(code=prod_dict['code'])
+                except KeyError:
+                    raise db_prod.DoesNotExist()
+                prod_dict['updated_timestamp'] = int(ts)
+                for key, value in prod_dict.items():
+                    setattr(prod_db, key, value)
+                try:
+                    prod_db.clean()
+                    prod_db.save()
+                except ValidationError as e:
+                    print(e)
+            except db_prod.DoesNotExist:
+                # add creation timestamp
+                prod_dict['added_timestamp'] = int(ts)
+                # insert into Product
+                prod_db = db_prod(**prod_dict)
+                try:
+                    prod_db.clean()
+                    prod_db.save()
+                    cat_prod = db_cat_prod(
+                        category_id=cat.id,
+                        product_id=prod_db.id
+                    )
+                    cat_prod.save()
+                except ValidationError as e:
+                    print(e)
+                
 
-    def run(self, cat):
-        # add cat db
-        cat_db = db_cat(category_name=cat)
-        cat_db.save()
+    def run(self, cat, update=False):
+        if update is False:
+            # add cat db
+            cat_db = db_cat(category_name=cat)
+            cat_db.save()
+        else:
+            cat_db = db_cat.objects.filter(category_name=cat)[0]
         # get products in cat from OFF API
         self.result_list = list()
         params = self.params.copy()
@@ -116,6 +144,9 @@ class Command(BaseCommand):
         for cat in self.categories:
             if db_cat.objects.filter(category_name=cat).exists():
                 print(f"[*] '{cat}'' already populated")
+                if options['update']:
+                    self.run(cat, update=True)
+                    print(f"[*] '{cat}' updated")
             else:
                 print(f"[*] '{cat}' empty, running populatedb.run('{cat}')")
                 self.run(cat)
