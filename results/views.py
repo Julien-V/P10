@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 import json
+import logging
 
 from datetime import datetime as dt
 
@@ -131,6 +132,7 @@ def sign_in(req):
         form = RegisterForm(req.POST)
         if form.is_valid():
             temp = req.POST.copy()
+            logging.info(f"New User : {temp['username']}")
             temp["username"] = temp["email"]
             form = RegisterForm(temp)
             if form.is_valid():
