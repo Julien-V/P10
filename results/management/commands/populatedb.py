@@ -1,14 +1,21 @@
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ValidationError
 
-import requests
 import json
+import logging
 import datetime
+import requests
 
 from pur_beurre.settings import off_api
 from results.models import Categorie as db_cat
 from results.models import Product as db_prod
 from results.models import CategoriesProducts as db_cat_prod
+
+###############################################################################
+# Logs
+###############################################################################
+logger = logging.getLogger(__name__)
+logger.setLevel(20)
 
 
 class Command(BaseCommand):
@@ -22,6 +29,8 @@ class Command(BaseCommand):
         self.fields = args['fields']
         self.req100 = args['req100']
         self.count = 0
+        self.numbers = {'added': 0, 'updated': 0}
+        self.numbers_cat = dict()
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -85,6 +94,7 @@ class Command(BaseCommand):
             prod_dict = self.clean_product(product)
             ts = datetime.datetime.now().timestamp()
             try:
+                # updating product
                 try:
                     prod_db = db_prod.objects.get(code=prod_dict['code'])
                 except KeyError:
@@ -95,6 +105,7 @@ class Command(BaseCommand):
                 try:
                     prod_db.clean()
                     prod_db.save()
+                    self.numbers_cat[cat]["updated"] += 1
                 except ValidationError as e:
                     print(e)
             except db_prod.DoesNotExist:
@@ -110,6 +121,7 @@ class Command(BaseCommand):
                         product_id=prod_db.id
                     )
                     cat_prod.save()
+                    self.numbers_cat[cat]["added"] += 1
                 except ValidationError as e:
                     print(e)
                 
@@ -142,11 +154,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for cat in self.categories:
+            self.numbers_cat[cat] = self.numbers.copy()
             if db_cat.objects.filter(category_name=cat).exists():
                 print(f"[*] '{cat}'' already populated")
                 if options['update']:
                     self.run(cat, update=True)
                     print(f"[*] '{cat}' updated")
+                    logger.info("populatedb", extra=self.numbers_cat)
             else:
                 print(f"[*] '{cat}' empty, running populatedb.run('{cat}')")
                 self.run(cat)
+                logger.info("populatedb", extra=self.numbers_cat)
