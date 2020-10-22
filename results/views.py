@@ -19,6 +19,13 @@ from results.forms import ConnectionForm, RegisterForm
 
 
 ###############################################################################
+# Logs
+###############################################################################
+logger = logging.getLogger(__name__)
+logger.setLevel(20)
+
+
+###############################################################################
 # Public views
 ###############################################################################
 def index(req):
@@ -132,7 +139,8 @@ def sign_in(req):
         form = RegisterForm(req.POST)
         if form.is_valid():
             temp = req.POST.copy()
-            logging.info(f"New User : {temp['username']}")
+            logger.info(f"New User", extra={
+                "email": temp['email']})
             temp["username"] = temp["email"]
             form = RegisterForm(temp)
             if form.is_valid():
