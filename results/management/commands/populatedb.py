@@ -105,7 +105,7 @@ class Command(BaseCommand):
                 try:
                     prod_db.clean()
                     prod_db.save()
-                    self.numbers_cat[cat]["updated"] += 1
+                    self.numbers_cat[cat.category_name]["updated"] += 1
                 except ValidationError as e:
                     print(e)
             except db_prod.DoesNotExist:
@@ -121,7 +121,7 @@ class Command(BaseCommand):
                         product_id=prod_db.id
                     )
                     cat_prod.save()
-                    self.numbers_cat[cat]["added"] += 1
+                    self.numbers_cat[cat.category_name]["added"] += 1
                 except ValidationError as e:
                     print(e)
                 
