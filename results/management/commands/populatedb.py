@@ -124,7 +124,6 @@ class Command(BaseCommand):
                     self.numbers_cat[cat.category_name]["added"] += 1
                 except ValidationError as e:
                     print(e)
-                
 
     def run(self, cat, update=False):
         if update is False:
