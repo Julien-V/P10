@@ -38,7 +38,7 @@ def test_views_public(client, view_name, context, django_db_set):
 
 
 ###############################################################################
-# results.views.sign_in
+# results.views.sign_up
 ###############################################################################
 @pytest.mark.django_db
 def test_register_view(client):
@@ -57,7 +57,7 @@ def test_register_view(client):
     assert response.url == reverse('home')
 
 ###############################################################################
-# results.views.log_in
+# results.views.sign_in
 ###############################################################################
 @pytest.mark.django_db
 def test_login_view(client, reg_user):

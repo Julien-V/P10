@@ -113,7 +113,7 @@ def product(req):
     return render(req, 'product.html', context)
 
 
-def log_in(req):
+def sign_in(req):
     error = False
     if req.method == "POST":
         form = ConnectionForm(req.POST)
@@ -133,7 +133,7 @@ def log_in(req):
     return render(req, 'authentification.html', locals())
 
 
-def sign_in(req):
+def sign_up(req):
     error = False
     if req.method == "POST":
         form = RegisterForm(req.POST)
