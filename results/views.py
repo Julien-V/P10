@@ -113,7 +113,7 @@ def product(req):
     return render(req, 'product.html', context)
 
 
-def log_in(req):
+def sign_in(req):
     error = False
     if req.method == "POST":
         form = ConnectionForm(req.POST)

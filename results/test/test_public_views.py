@@ -57,7 +57,7 @@ def test_register_view(client):
     assert response.url == reverse('home')
 
 ###############################################################################
-# results.views.log_in
+# results.views.sign_in
 ###############################################################################
 @pytest.mark.django_db
 def test_login_view(client, reg_user):
