@@ -38,7 +38,7 @@ def test_views_public(client, view_name, context, django_db_set):
 
 
 ###############################################################################
-# results.views.sign_in
+# results.views.sign_up
 ###############################################################################
 @pytest.mark.django_db
 def test_register_view(client):

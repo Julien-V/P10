@@ -6,7 +6,7 @@
         <div class="row h-100 align-items-center justify-content-center">
             <div id="connection-div" class="col-lg-10 align-self-top">
             	<h1 class="text-left">S'inscrire</h1>
-            	<form id="register-form" method="post" action="./sign_in">
+            	<form id="register-form" method="post" action="./sign_up">
     				{% csrf_token %}
     				{{ form.as_p }}
     				<input type="submit" value="Créer le compte" />
