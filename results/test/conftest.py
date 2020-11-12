@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from django.core.management import call_command
 from results.management.commands.populatedb import Command
+from results.management.commands.loadlanguages import Command as lL
 
 from django.urls import reverse
 
@@ -89,6 +90,27 @@ def patch_get_and_load(monkeypatch):
         """
         return json_file.values
     monkeypatch.setattr(Command, "get_and_load", mock_get_and_load)
+
+    class FakeJSON_file:
+        pass
+
+    json_file = FakeJSON_file()
+    json_file.values = None
+    return json_file
+
+
+@pytest.fixture
+def patch_loadlanguages(monkeypatch):
+    """This function monkeypatchs lL.load_file
+    with mock_load_file. Create a FakeJSON_file class which is
+    used to get a json file
+    """
+    def mock_load_file(*args):
+        """This function return var values from class FakeJSON_file
+        :return: json file in a dict (json.loads())
+        """
+        return json_file.values
+    monkeypatch.setattr(lL, "load_file", mock_load_file)
 
     class FakeJSON_file:
         pass
