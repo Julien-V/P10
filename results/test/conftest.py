@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 
 from django.core.management import call_command
 from results.management.commands.populatedb import Command
-from results.management.commands.loadlanguages import Command as lL
 
 from django.urls import reverse
 
@@ -17,19 +16,31 @@ from results.models import Favorite
 
 
 def pytest_collection_modifyitems(config, items):
-    list_items = items.copy()
     # TestPopulateDB should be first
+    # TestLoadlanguages should be second
+    list_items = items.copy()
+    desired_order = [
+        'test_popu_invalid',
+        'test_popu_valid',
+        'test_popu_update',
+        'test_load_tag']
+    d_o_mirror = list()
     for i in items:
-        if "test_popu_" in getattr(i, 'name'):
-            to_move = list_items.pop(list_items.index(i))
-            if getattr(list_items[0], 'name') == 'test_popu_invalid':
-                list_items.insert(1, to_move)
-            else:
-                list_items.insert(0, to_move)
+        if i.name in desired_order:
+            # get test function
+            d_o_mirror.append(list_items.pop(list_items.index(i)))
+    # sort them
+    d_o_mirror = sorted(
+        d_o_mirror,
+        key=lambda i: desired_order.index(i.name))
+    # insert them in order at the beginning of the list
+    d_o_mirror.reverse()
+    for obj in d_o_mirror:
+        list_items.insert(0, obj)
     items[:] = list_items
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='module')
 def django_db_set(django_db_setup, django_db_blocker):
     """This fixture load data saved with './manage.py dumpdata'
     command"""
@@ -91,27 +102,6 @@ def patch_get_and_load(monkeypatch):
         """
         return json_file.values
     monkeypatch.setattr(Command, "get_and_load", mock_get_and_load)
-
-    class FakeJSON_file:
-        pass
-
-    json_file = FakeJSON_file()
-    json_file.values = None
-    return json_file
-
-
-@pytest.fixture
-def patch_loadlanguages(monkeypatch):
-    """This function monkeypatchs lL.load_file
-    with mock_load_file. Create a FakeJSON_file class which is
-    used to get a json file
-    """
-    def mock_load_file(*args):
-        """This function return var values from class FakeJSON_file
-        :return: json file in a dict (json.loads())
-        """
-        return json_file.values
-    monkeypatch.setattr(lL, "load_file", mock_load_file)
 
     class FakeJSON_file:
         pass

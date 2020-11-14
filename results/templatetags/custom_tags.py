@@ -23,7 +23,7 @@ def print_tr(context, tagname):
     try:
         text = Translation.objects.get(tag=tagname)
     except Translation.DoesNotExist:
-        logger.warning("tagname DoesNotExist")
+        logger.warning(f"tagname '{tagname}' DoesNotExist")
         return tagname
     # serious rework needed here
     lang_available = [f.name for f in text._meta.get_fields() if '_' in f.name]
@@ -31,6 +31,7 @@ def print_tr(context, tagname):
         req = context['request']
         lg = req.META["HTTP_ACCEPT_LANGUAGE"]
     except KeyError:
+        logger.warning("KeyError")
         return getattr(text, "fr_FR")
     reg = r"""[a-z]{2}[_][A-Z]{2}"""  # xx_XX
     lang_user = re.findall(reg, lg.replace("-", "_"))

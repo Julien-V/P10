@@ -2,9 +2,7 @@
 # coding : utf-8
 
 import pytest
-from selenium import webdriver
-# https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux64.tar.gz
-from django.urls import reverse
+
 from django.template import Template, Context
 
 
@@ -16,10 +14,11 @@ def test_webdriver(live_server, firefox):
 
 @pytest.mark.django_db()
 def test_custom_tag(live_server, firefox, django_db_set):
+    """Test custom tag 'print_tr' when rendering a template"""
     class Req:
         META = {"HTTP_ACCEPT_LANGUAGE": 'en-US;fr_FR;q=0.8,en;q=0.7'}
     context = Context({'request': Req})
-    template = Template(
-        "{% load custom_tags %}{% print_tr 'log_in' %}")
+    custom_string = "{% load custom_tags %}{% print_tr 'log_in' %}"
+    template = Template(custom_string)
     text = template.render(context)
     assert text == 'Log In'
