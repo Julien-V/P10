@@ -3,6 +3,7 @@
 
 
 import pytest
+from selenium import webdriver
 
 from django.contrib.auth.models import User
 
@@ -118,3 +119,26 @@ def patch_loadlanguages(monkeypatch):
     json_file = FakeJSON_file()
     json_file.values = None
     return json_file
+
+
+@pytest.fixture(scope="module")
+def firefox():
+    options = webdriver.FirefoxOptions()
+    options.add_argument('-headless')
+    with webdriver.Firefox(options=options) as driver:
+        yield driver
+
+
+@pytest.fixture()
+def firefox_logged_in(firefox, live_server, login_user):
+    client = login_user()
+    cookie = client.cookies["sessionid"]
+    firefox.get(live_server.url)
+    firefox.add_cookie({
+        'name': 'sessionid',
+        'value': cookie.value,
+        'secure': False,
+        'path': '/'
+        })
+    firefox.refresh()
+    return firefox

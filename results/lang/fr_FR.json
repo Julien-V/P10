@@ -3,5 +3,7 @@
     "log_in": "Se connecter",
     "sign_up": "S'inscrire",
     "auth_fail": "Utilisateur inconnu ou mauvais mot de passe.",
-    "auth_success": "Vous \u00eates connect\u00e9, "
+    "auth_success": "Vous \u00eates connect\u00e9,",
+    "legals": "Mentions légales",
+    "contact": "Contact"
 }

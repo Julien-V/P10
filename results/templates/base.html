@@ -1,3 +1,4 @@
+{% load custom_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,8 +52,8 @@
                         </a>
                     </li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_in">Se connecter</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_up">S'inscrire</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_in">{% print_tr "log_in" %}</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_up">{% print_tr "sign_up" %}</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -64,8 +65,8 @@
 	<footer class="bg-light py-5">
     <div class="container">
     		<div class="small text-center text-muted">
-    			<a href="./terms">Mentions légales</a>
-    			<a href="./home#contact">Contact</a>
+    			<a href="./terms">{% print_tr "legals" %}</a>
+    			<a href="./home#contact">{% print_tr "contact" %}</a>
     		</div>
     	</div>
 	</footer>

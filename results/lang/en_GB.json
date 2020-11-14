@@ -3,5 +3,7 @@
     "log_in": "Log In",
     "sign_up": "Sign Up",
     "auth_fail": "Unknown user name or bad password",
-    "auth_success": "You are connected, "
+    "auth_success": "You are connected,",
+    "legals": "Legals",
+    "contact": "Contact"
 }
