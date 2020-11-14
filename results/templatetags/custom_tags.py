@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 # coding : utf-8
 
-import re
 import logging
 
 from django import template
 
 from results.models import Translation
+from results.utils import detect_lang
 
 ###############################################################################
 # Logs
@@ -19,31 +19,38 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def print_tr(context, tagname):
+def print_tr(context, tag):
+    """This function gets Translation model by tag (from DB)
+    and return translated text in the better available language.
+
+    # How to use :
+    === template.html
+    * {% load custom_tags %}
+    * <!-- Some HTML -->
+    * <p id="log_in">{% print_tr "log_in"}</p>
+
+    :param context: dict(), view context (i believe)
+    :param tag: str(), tag name
+
+    :return tag: str(), tag if tag DoesNotExist in DB
+    :return: str(), tag translated in language_detected[0]
+    :return: str(), tag translated in french (default)
+    """
     try:
-        text = Translation.objects.get(tag=tagname)
+        text = Translation.objects.get(tag=tag)
     except Translation.DoesNotExist:
-        logger.warning(f"tagname '{tagname}' DoesNotExist")
-        return tagname
-    # serious rework needed here
+        logger.warning(f"Tagname '{tag}' DoesNotExist")
+        return tag
+    # get Translation fields by calling text._meta.get_fields():
     lang_available = [f.name for f in text._meta.get_fields() if '_' in f.name]
-    try:
-        req = context['request']
-        lg = req.META["HTTP_ACCEPT_LANGUAGE"]
-    except KeyError:
-        logger.warning("KeyError")
-        return getattr(text, "fr_FR")
-    reg = r"""[a-z]{2}[_][A-Z]{2}"""  # xx_XX
-    lang_user = re.findall(reg, lg.replace("-", "_"))
-    # code below will list matching languages to
-    # first two letters ("en") instead of whole
-    # language code ("en_GB", "en_US", etc.)
-    lang_available_user = list()
-    for l in lang_user:
-        for lat in lang_available:
-            if l[:2] in lat:
-                lang_available_user.append(lat)
-    if lang_available_user:
-        return getattr(text, lang_available_user[0])
+    # :lang_available is a list(available_lang_for_var text)
+    lang_detected, extra = detect_lang(context["request"], lang_available)
+    if lang_detected is not None:
+        try:
+            return getattr(text, lang_detected)
+        except AttributeError:
+            logger.warning(
+                f"print_tr : lang_detected but not available", extra=extra)
+            return getattr(text, "fr_FR")
     else:
         return getattr(text, "fr_FR")
