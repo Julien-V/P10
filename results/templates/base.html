@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<title>Pur Beurre - </title>
+	<title>{% print_tr "pur_beurre_title" %}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/png" href="static/assets/favicon.png"/>
     <!-- Font Awesome icons (free version)-->
@@ -33,7 +33,7 @@
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     <form action="{% url 'search_results' %}" method="get">
                         {% csrf_token %}
-                        <input id="navbar-input" name="query" size="12" placeholder="Chercher">
+                        <input id="navbar-input" name="query" size="12" placeholder="{% print_tr 'search' %}">
                     </form>
                 	{% if user.is_authenticated %}
                     <li class="nav-item">

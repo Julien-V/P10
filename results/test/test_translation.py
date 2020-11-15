@@ -9,7 +9,7 @@ from django.template import Template, Context
 @pytest.mark.django_db()
 def test_webdriver(live_server, firefox):
     firefox.get(live_server.url)
-    assert firefox.title == "Pur Beurre -"
+    assert firefox.title == "Pur Beurre(fr) -"
 
 
 @pytest.mark.django_db()
