@@ -46,9 +46,9 @@ def print_tr(context, tag):
     # :lang_available is a list(available_lang_for_var text)
     lang_detected, extra = detect_lang(context["request"], lang_available)
     if lang_detected is not None:
-        try:
+        if lang_detected in lang_available:
             return getattr(text, lang_detected)
-        except AttributeError:
+        else:
             logger.warning(
                 f"print_tr : lang_detected but not available", extra=extra)
             return getattr(text, "fr_FR")
