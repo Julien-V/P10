@@ -64,9 +64,22 @@
 	<!-- Footer -->
 	<footer class="bg-light py-5">
     <div class="container">
-    		<div class="small text-center text-muted">
-    			<a href="./terms">{% print_tr "legals" %}</a>
-    			<a href="./home#contact">{% print_tr "contact" %}</a>
+    		<div class="row small text-center text-muted">
+                <div class="col-md-4">
+                    <a href="./terms">{% print_tr "legals" %}</a>
+                </div>
+                <div class="col-md-4">
+                    <div id="lang-selector">
+                        <img id="current-lang-img" src="/static/assets/img/{% print_tr 'language' %}.png"/>
+                        <div id="lang">
+                        <a id="fr_FR" href="#"><img id="flag-lang-img" src="/static/assets/img/fr_FR.png"/></a>
+                        <a id="en_GB" href="#"><img id="flag-lang-img" src="/static/assets/img/en_GB.png"/></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+    			    <a href="./home#contact">{% print_tr "contact" %}</a>
+                </div>
     		</div>
     	</div>
 	</footer>
@@ -78,5 +91,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <!-- Core theme JS-->
     <script src="static/js/scripts.js"></script>
+    <script src="static/js/results.js"></script>
 </body>
 </html>
