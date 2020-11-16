@@ -25,8 +25,12 @@ def detect_lang(req, lang_available=["fr_FR", "en_GB"]):
     # user.lang or meta
     try:
         user = User.objects.get(username=username)
-        # lang = user.lang
-        # user_lang = lang
+        try:
+            lang = user.profile.lang
+            user = lang
+        except AttributeError:
+            lang, user = None, None
+            raise User.DoesNotExist
     except User.DoesNotExist:
         user = None
         try:

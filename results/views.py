@@ -12,8 +12,8 @@ import logging
 from datetime import datetime as dt
 
 from results.models import CategoriesProducts as pb_cat_prod
-from results.models import Product
-from results.models import Favorite
+from results.models import Product, Favorite
+from results.models import Profile
 
 from results.forms import ConnectionForm, RegisterForm
 
@@ -145,6 +145,12 @@ def sign_up(req):
             form = RegisterForm(temp)
             if form.is_valid():
                 form.save()
+                try:
+                    user = User.objects.get(username=temp["username"])
+                    profile = Profile(user=user)
+                    profile.save()
+                except User.DoesNotExist:
+                    logger.warn('user created but DoesNotExist')
                 return redirect(reverse('home'))
     else:
         form = RegisterForm()
