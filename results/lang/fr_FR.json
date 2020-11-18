@@ -1,5 +1,7 @@
 {
 	"language": "fr_FR",
+    "account_language": "Langue du compte",
+    "cookie_language": "Langue actuellement affichée (cookie)",
 	"pur_beurre_title": "Pur Beurre(fr) -",
     "connection": "Connexion",
     "log_in": "Se connecter",

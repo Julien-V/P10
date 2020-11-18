@@ -13,6 +13,7 @@ from results.management.commands.populatedb import Command
 from django.urls import reverse
 
 from results.models import Favorite
+from results.models import Profile
 
 
 def pytest_collection_modifyitems(config, items):
@@ -53,10 +54,12 @@ def django_db_set(django_db_setup, django_db_blocker):
 def reg_user():
     """This fixture registers usertest"""
     def make_reg():
-        User.objects.create_user(
+        user = User.objects.create_user(
                 username="usertest",
                 password="test1password"
             )
+        profile = Profile(user=user, lang="fr_FR")
+        profile.save()
     return make_reg
 
 

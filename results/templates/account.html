@@ -1,10 +1,17 @@
 {% extends "base_results.html" %}
-
+{% load custom_tags %}
 {% block page_content_extended %}
 <section class="page-section bg-primary" id="product">
-	<div class="container">
-		<div class="row justify-content-center">
-			<p>{{ user.email }}</p>
+	<div class="container" id="user-profile">
+		<div class="row" id="user-profile-field">
+			<p>{% print_tr "mail" %} : </p>
+			<input id="email-input" name="email" type="input" readonly value="{{ user.email }}">
+			<br>
+		</div>
+		<div class="row" id="user-profile-field">
+			<p>{% print_tr "account_language" %} (<img id="flag-img" src="/static/assets/img/{{ user.profile.lang }}.png"/>) // {% print_tr "cookie_language" %} (<img id="flag-img" src="/static/assets/img/{% print_tr 'language' %}.png"/>) : <input type="checkbox" name="lg" id="lg-input" value="fr_FR"><img id="flag-img" src="/static/assets/img/fr_FR.png"/>
+			<input type="checkbox" name="lg" id="lg-input" value="en_GB"><img id="flag-img" src="/static/assets/img/en_GB.png"/>
+			</p>
 		</div>
 	</div>
 </section>
