@@ -30,5 +30,13 @@
     "home_about_p_description_name_2": "\"For my part I already went to many stores because I love to walk around, especially in cellars and kitchens. I knew by heart the content of organic shops (which I love) and the ingredients of all the food sold. When Colette asked me if she could replace her morning Nutella with a healthier food, I knew where to find it right away. The idea of ​​Pur Beurre was born !\"",
     "home_contacts_contact_us": "Contact Us !",
     "home_contacts_mail": "mail",
-    "home_contacts_phone": "phone"
+    "home_contacts_phone": "phone",
+    "username": "Username",
+    "reg_username_help": "Max: 150 characters. [a-Z] [0-9] [@.+-_]",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email_addr": "Email",
+    "password1": "Password",
+    "reg_password1_help": "Min: 8 characters",
+    "password2": "Confirm"
 }

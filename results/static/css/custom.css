@@ -138,3 +138,19 @@ p, a {
 #user-profile-field {
 	margin-bottom: 2%;
 }
+
+#helptext_ {
+	display: none;
+}
+
+#register-form {
+	padding-left: 3%;
+}
+
+#register-logo {
+	height: fit-content;
+}
+
+[id^=input-] {
+	margin-bottom: 2%;
+}

@@ -30,5 +30,13 @@
     "home_about_p_description_name_2": "\"Pour ma part je me rendais déjà dans bien des magasins car j'aime beaucoup me balader, surtout dans les caves et les cuisines. Je connaissais par coeur le contenu des boutiques bio (dont je raffole) ainsi que les ingrédients de tous les aliments vendus. Lorsque Colette m'a demandé si elle pouvait remplacer son Nutella matinal par un aliment plus sain, je savais tout de suite où le trouver. L'idée de Pur Beurre était née !\"",
     "home_contacts_contact_us": "Contactez-nous !",
     "home_contacts_mail": "mail",
-    "home_contacts_phone": "téléphone"
+    "home_contacts_phone": "téléphone",
+    "username": "Nom d'utilisateur",
+    "reg_username_help": "Max: 150 caractères. [a-Z] [0-9] [@.+-_]",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email_addr": "Adresse Email",
+    "password1": "Mot de passe",
+    "reg_password1_help": "Min: 8 caractères",
+    "password2": "Confirmer"
 }

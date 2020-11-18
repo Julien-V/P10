@@ -8,11 +8,29 @@
         <div class="row h-100 align-items-center justify-content-center">
             <div id="connection-div" class="col-lg-10 align-self-top">
             	<h1 class="text-left">{% print_tr "sign_up" %}</h1>
-            	<form id="register-form" method="post" action="./sign_up">
-    				{% csrf_token %}
-    				{{ form.as_p }}
-    				<input type="submit" value="Créer le compte" />
-				</form>
+                <hr class="divider my-4" />
+                <div class="row" id="register-zone">
+                    <img id="register-logo" src="/static/assets/img/logo_pur_beurre.png">
+                	<form id="register-form" method="post" action="./sign_up">
+        				{% csrf_token %}
+                        <input type="text" id="input-username" name="username" placeholder="{% print_tr 'username' %}" autofocus></input><span id="helptext-icon" class="icon-question-circle"></span>
+                        <span class="helptext_username">{% print_tr "reg_username_help" %}</span>
+                        <br>
+                        <input type="text" id="input-email" name="email" placeholder="{% print_tr 'email_addr' %}"></input>
+                        <div class="">
+                        <input type="text" id="input-first-name" name="first_name" placeholder="{% print_tr 'first_name' %}"></input>
+                        <br>
+                        <input type="text" id="input-last-name" name="last_name" placeholder="{% print_tr 'last_name' %}"></input>
+                        </div>
+                        <div class="">
+                        <input type="password" id="input-password1" name="password1" placeholder="{% print_tr 'password1' %}"></input>
+                        <span id="helptext_password">{% print_tr "reg_password1_help" %}</span>
+                        <br>
+                        <input type="password" id="input-password2" name="password2" placeholder="{% print_tr 'password2' %}"></input>
+                        </div>
+        				<input type="submit" id="sign_up" value="{% print_tr 'sign_up' %}" />
+    				</form>
+                </div>
 				<a href="./sign_in"><strong>{% print_tr "log_in" %}</strong></a>
 			</div>
 		</div>
