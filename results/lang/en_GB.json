@@ -4,7 +4,7 @@
     "cookie_language":"Language currently displayed (cookie)",
 	"pur_beurre_title": "Pur Beurre(en) -",
     "connection": "Connection",
-    "log_in": "Log In",
+    "log_in": "Sign In",
     "sign_up": "Sign Up",
     "auth_fail": "Unknown user name or bad password",
     "auth_success": "You are connected,",

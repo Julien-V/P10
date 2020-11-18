@@ -154,3 +154,7 @@ p, a {
 [id^=input-] {
 	margin-bottom: 2%;
 }
+
+[id^=helptext_]{
+	font-size: small;
+}
