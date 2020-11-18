@@ -13,8 +13,8 @@
                     <img id="register-logo" src="/static/assets/img/logo_pur_beurre.png">
                 	<form id="register-form" method="post" action="./sign_up">
         				{% csrf_token %}
-                        <input type="text" id="input-username" name="username" placeholder="{% print_tr 'username' %}" autofocus></input><span id="helptext-icon" class="icon-question-circle"></span>
-                        <span class="helptext_username">{% print_tr "reg_username_help" %}</span>
+                        <input type="text" id="input-username" name="username" placeholder="{% print_tr 'username' %}" autofocus></input>
+                        <span id="helptext_username">{% print_tr "reg_username_help" %}</span>
                         <br>
                         <input type="text" id="input-email" name="email" placeholder="{% print_tr 'email_addr' %}"></input>
                         <div class="">
