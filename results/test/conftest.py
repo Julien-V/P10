@@ -3,6 +3,7 @@
 
 
 import pytest
+from selenium import webdriver
 
 from django.contrib.auth.models import User
 
@@ -12,22 +13,35 @@ from results.management.commands.populatedb import Command
 from django.urls import reverse
 
 from results.models import Favorite
+from results.models import Profile
 
 
 def pytest_collection_modifyitems(config, items):
-    list_items = items.copy()
     # TestPopulateDB should be first
+    # TestLoadlanguages should be second
+    list_items = items.copy()
+    desired_order = [
+        'test_popu_invalid',
+        'test_popu_valid',
+        'test_popu_update',
+        'test_load_tag']
+    d_o_mirror = list()
     for i in items:
-        if "test_popu_" in getattr(i, 'name'):
-            to_move = list_items.pop(list_items.index(i))
-            if getattr(list_items[0], 'name') == 'test_popu_invalid':
-                list_items.insert(1, to_move)
-            else:
-                list_items.insert(0, to_move)
+        if i.name in desired_order:
+            # get test function
+            d_o_mirror.append(list_items.pop(list_items.index(i)))
+    # sort them
+    d_o_mirror = sorted(
+        d_o_mirror,
+        key=lambda i: desired_order.index(i.name))
+    # insert them in order at the beginning of the list
+    d_o_mirror.reverse()
+    for obj in d_o_mirror:
+        list_items.insert(0, obj)
     items[:] = list_items
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='module')
 def django_db_set(django_db_setup, django_db_blocker):
     """This fixture load data saved with './manage.py dumpdata'
     command"""
@@ -40,10 +54,12 @@ def django_db_set(django_db_setup, django_db_blocker):
 def reg_user():
     """This fixture registers usertest"""
     def make_reg():
-        User.objects.create_user(
+        user = User.objects.create_user(
                 username="usertest",
                 password="test1password"
             )
+        profile = Profile(user=user, lang="fr_FR")
+        profile.save()
     return make_reg
 
 
@@ -96,3 +112,26 @@ def patch_get_and_load(monkeypatch):
     json_file = FakeJSON_file()
     json_file.values = None
     return json_file
+
+
+@pytest.fixture(scope="module")
+def firefox():
+    options = webdriver.FirefoxOptions()
+    options.add_argument('-headless')
+    with webdriver.Firefox(options=options) as driver:
+        yield driver
+
+
+@pytest.fixture()
+def firefox_logged_in(firefox, live_server, login_user):
+    client = login_user()
+    cookie = client.cookies["sessionid"]
+    firefox.get(live_server.url)
+    firefox.add_cookie({
+        'name': 'sessionid',
+        'value': cookie.value,
+        'secure': False,
+        'path': '/'
+        })
+    firefox.refresh()
+    return firefox

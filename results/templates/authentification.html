@@ -1,25 +1,28 @@
 {% extends "base.html" %}
-
+{% load custom_tags %}
 {% block page_content %}
 <header class="masthead">
 	<div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div id="connection-div" class="col-lg-10 align-self-top">
-            	<h1 class="text-left">Connexion</h1>
-            	<br>
-            	{% if error %}
-				<p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
-				{% endif %}
-				{% if user.is_authenticated %}
-				<p><strong>Vous êtes connecté, {{ user.username }} !></strong></p>
-				{% else %}
-				<form id="connection-form" method="post" action="./sign_in">
-    				{% csrf_token %}
-    				{{ form.as_p }}
-    				<input type="submit" value="Connexion"/>
-				</form>
-				<a href="./sign_up"><strong>S'inscrire</strong></a>
-				{% endif %}
+            	<h1 id="connection-h1" class="text-left">{% print_tr "log_in" %}</h1>
+            	<hr class="divider my-4" />
+                <div class="col" id="login-zone">
+	            	{% if error %}
+					<p><strong>{% print_tr "auth_fail" %}</strong></p>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<p><strong>{% print_tr "auth_success" %}{{ user.username }} !></strong></p>
+					{% else %}
+					<form id="connection-form" method="post" action="./sign_in">
+	    				{% csrf_token %}
+	    				<input type="text" id="input-username" name="username" placeholder="{% print_tr 'username' %}" autofocus>
+	    				<input type="password" id="input-password" name="password" placeholder="{% print_tr 'password1' %}"></input>
+	    				<input type="submit" value="{% print_tr 'log_in' %}"/>
+					</form>
+					<a href="./sign_up"><strong>{% print_tr "sign_up" %}</strong></a>
+					{% endif %}
+				</div>
 			</div>
 		</div>
 	</div>

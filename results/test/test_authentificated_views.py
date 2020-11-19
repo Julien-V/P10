@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from django.urls import reverse
 
 from results.models import Favorite
+from results.models import Profile
 
 ###############################################################################
 # results.views.substitute
@@ -51,3 +52,27 @@ def test_logout_view(login_user, django_db_set):
     response = client.get(url)
     assert response.status_code == 302
     assert response.url == reverse('home')
+
+
+###############################################################################
+# results.views.log_out
+###############################################################################
+@pytest.mark.django_db
+def test_ch_lang_view(login_user, django_db_set):
+    client = login_user()
+    user = client.session['_auth_user_id']
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        print("Profile DoesNotExist")
+    old_lang = profile.lang
+    url = reverse('ch_lang')
+    context = {'lang': 'en_GB'}
+    response = client.post(url, context)
+    assert response.status_code == 200
+    assert response.content.decode() == 'True'
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        print("Profile still DoesNotExist")
+    assert old_lang != profile.lang
