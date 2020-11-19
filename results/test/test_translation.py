@@ -22,4 +22,4 @@ def test_custom_tag(live_server, firefox, django_db_set):
     custom_string = "{% load custom_tags %}{% print_tr 'log_in' %}"
     template = Template(custom_string)
     text = template.render(context)
-    assert text == 'Log In'
+    assert text == 'Sign In'
