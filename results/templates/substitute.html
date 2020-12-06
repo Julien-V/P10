@@ -1,14 +1,14 @@
 {% extends "base_results.html" %}
-
+{% load custom_tags %}
 {% block page_content_extended %}
 <section class="page-section" id="results">
 	<div class="container">
-		<h2 class="text-center">Vos aliments substitués :</h2>
+		<h2 class="text-center">{% print_tr "your_substitutes" %}</h2>
 		<br><br>
 		<div class="row justify-content-center text-center">
 			{% for product in subs %}
-			<div id="product-col" class="col-md-4 col-sm-12">
-				<a href="./product?code={{ product.code }}">
+			<div id="substitute-col" class="col-md-4 col-sm-12">
+				<a href="./product?code={{ product.code }}" id="product-link">
 					<span id="nutrition-grades-bubble" style="background-color: var(--ng_{{ product.nutrition_grades }});">{{ product.nutrition_grades }}</span>
 					<img id="product-img" src="{{ product.image_url }}"/><p>{{ product.product_name }}</p>
 				</a>

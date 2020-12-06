@@ -1,5 +1,5 @@
 {% extends "base_results.html" %}
-
+{% load custom_tags %}
 {% block page_content_extended %}
 <section class="page-section bg-primary" id="product">
 	<div class="container">
@@ -8,15 +8,15 @@
 				<img type="image/png" src="{{ ng_image }}"/>
 			</div>
 			<div class="col-lg-6">
-				<h3>Repères nutritionnels pour 100g :</h3>
-				<p>{{ req100.fat_100g }}g matières grasses/lipides</p>
-				<p>{{ req100.saturatedfat_100g }}g d'acides gras saturés</p>
-				<p>{{ req100.sugars_100g }}g de sucres</p>
-				<p>{{ req100.salt_100g }}g de sel</p>
+				<h3>{% print_tr "_req100" %}</h3>
+				<p>{{ req100.fat_100g }}g {% print_tr "fat_req100" %}</p>
+				<p>{{ req100.saturatedfat_100g }}g {% print_tr "saturatedfat_req100" %}</p>
+				<p>{{ req100.sugars_100g }}g {% print_tr "sugars_req100" %}</p>
+				<p>{{ req100.salt_100g }}g {% print_tr "salt_req100" %}</p>
 			</div>
 		</div>
 		<div class="text-center">
-			<a href="{{ product_searched.url }}"><button>Voir la fiche d'OpenFoodFacts</button></a>
+			<a href="{{ product_searched.url }}"><button>{% print_tr "show_OFF_product_page" %}</button></a>
 		</div>
 	</div>
 </section>

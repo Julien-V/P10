@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 
 from django.http import HttpResponseNotFound
+from django.http import HttpResponse
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -12,8 +13,8 @@ import logging
 from datetime import datetime as dt
 
 from results.models import CategoriesProducts as pb_cat_prod
-from results.models import Product
-from results.models import Favorite
+from results.models import Product, Favorite
+from results.models import Translation, Profile
 
 from results.forms import ConnectionForm, RegisterForm
 
@@ -145,6 +146,12 @@ def sign_up(req):
             form = RegisterForm(temp)
             if form.is_valid():
                 form.save()
+                try:
+                    user = User.objects.get(username=temp["username"])
+                    profile = Profile(user=user)
+                    profile.save()
+                except User.DoesNotExist:
+                    logger.warn('user created but DoesNotExist')
                 return redirect(reverse('home'))
     else:
         form = RegisterForm()
@@ -194,6 +201,26 @@ def account(req):
         'masthead_title': f"{f_name} {l_name}"
     }
     return render(req, 'account.html', context)
+
+
+@login_required
+def ch_lang(req):
+    """This view changes account language"""
+    if req.method == "POST":
+        query = req.POST.get('lang')
+        if not query:
+            return HttpResponse(False)
+        else:
+            lang_available = Translation._meta.get_fields()
+            lang_available = [f.name for f in lang_available if '_' in f.name]
+            try:
+                user = User.objects.get(username=req.user)
+                if query in lang_available:
+                    user.profile.lang = query
+                    user.profile.save()
+                    return HttpResponse(True)
+            except User.DoesNotExist:
+                return HttpResponse(False)
 
 
 @login_required
