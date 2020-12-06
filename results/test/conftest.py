@@ -118,7 +118,10 @@ def patch_get_and_load(monkeypatch):
 def firefox(django_db_set):
     options = webdriver.FirefoxOptions()
     options.add_argument('-headless')
-    with webdriver.Firefox(options=options) as driver:
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference('intl.accept_languages', 'fr-FR')
+    profile.update_preferences()
+    with webdriver.Firefox(firefox_profile=profile, options=options) as driver:
         yield driver
 
 
