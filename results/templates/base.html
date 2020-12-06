@@ -1,9 +1,10 @@
+{% load custom_tags %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<title>Pur Beurre - </title>
+	<title>{% print_tr "pur_beurre_title" %}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/png" href="static/assets/favicon.png"/>
     <!-- Font Awesome icons (free version)-->
@@ -30,30 +31,41 @@
             	<span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-3">
+                        <div id="lang-selector">
+                            <img id="current-lang-img" src="/static/assets/img/{% print_tr 'language' %}.png"/>
+                            <div id="lang">
+                            <a id="fr_FR" href="#"><img id="flag-lang-img" src="/static/assets/img/fr_FR.png"/></a>
+                            <a id="en_GB" href="#"><img id="flag-lang-img" src="/static/assets/img/en_GB.png"/></a>
+                            </div>
+                        </div>
+                    </div>
                     <form action="{% url 'search_results' %}" method="get">
                         {% csrf_token %}
-                        <input id="navbar-input" name="query" size="12" placeholder="Chercher">
+                        <input id="navbar-input" name="query" size="12" placeholder="{% print_tr 'search' %}">
                     </form>
                 	{% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="./account">
+                        <a class="nav-link js-scroll-trigger" id="account-link" href="./account">
                             <span id="navbar-icon" class="icon-user"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="./substitute">
+                        <a class="nav-link js-scroll-trigger" id="substitute-link" href="./substitute">
                             <span id="navbar-icon" class="icon-carrot"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="./log_out">
+                        <a class="nav-link js-scroll-trigger" id="sign-out-link" href="./log_out">
                             <span id="navbar-icon" class="icon-sign-out"></span>
                         </a>
                     </li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_in">Se connecter</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_up">S'inscrire</a></li>
+                    <li class="nav-item"><a id="sign-in-link" class="nav-link js-scroll-trigger" href="./sign_in">{% print_tr "log_in" %}</a></li>
+                    <li class="nav-item"><a id="sign-up-link" class="nav-link js-scroll-trigger" href="./sign_up">{% print_tr "sign_up" %}</a></li>
                     {% endif %}
+                    </div>
                 </ul>
             </div>
         </div>
@@ -63,9 +75,15 @@
 	<!-- Footer -->
 	<footer class="bg-light py-5">
     <div class="container">
-    		<div class="small text-center text-muted">
-    			<a href="./terms">Mentions légales</a>
-    			<a href="./home#contact">Contact</a>
+    		<div class="row small text-center text-muted">
+                <div class="col-md-4">
+                    <a href="./terms">{% print_tr "legals" %}</a>
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+    			    <a href="./home#contact">{% print_tr "contact" %}</a>
+                </div>
     		</div>
     	</div>
 	</footer>
@@ -77,5 +95,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <!-- Core theme JS-->
     <script src="static/js/scripts.js"></script>
+    <script src="static/js/results.js"></script>
 </body>
 </html>

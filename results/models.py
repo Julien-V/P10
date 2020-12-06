@@ -103,3 +103,15 @@ class CategoriesProducts(models.Model):
         Categorie, on_delete=models.CASCADE)
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE)
+
+
+class Translation(models.Model):
+    tag = models.TextField(unique=True)
+    fr_FR = models.TextField()
+    en_GB = models.TextField(null=True)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, unique=True)
+    lang = models.TextField(default="fr_FR", null=True)

@@ -84,7 +84,7 @@ p, a {
   	cursor: pointer;
 }
 
-#product-col {
+#product-col, #substitute-col {
 	padding-bottom: 10%;
 }
 
@@ -96,4 +96,65 @@ p, a {
 
 #connection-form, #register-form {
 	font-weight: bold;
+}
+
+
+#lang {
+	display: flex;
+}
+
+#current-lang-img, #flag-lang-img {
+	max-width:10%;
+}
+
+#flag-lang-img {
+	display: none;
+}
+
+#flag-img {
+	width: 3%;
+}
+
+#lang-selector:hover a {
+	float:left;
+	width:50%;
+}
+
+#lang-selector:hover #flag-lang-img {
+	display: inline-block;
+	flex: 50%;
+	max-width: 20%
+}
+
+#lang-selector:hover #current-lang-img {
+	display: none;
+}
+
+#email-input, #lg-input {
+	margin-right: 2%;
+	margin-left: 2%;
+}
+
+#user-profile-field {
+	margin-bottom: 2%;
+}
+
+#helptext_ {
+	display: none;
+}
+
+#register-form {
+	padding-left: 3%;
+}
+
+#register-logo {
+	height: fit-content;
+}
+
+[id^=input-] {
+	margin-bottom: 2%;
+}
+
+[id^=helptext_]{
+	font-size: small;
 }
