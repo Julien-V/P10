@@ -11,6 +11,7 @@ addons:
 
 before_script:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux64.tar.gz
+  - mkdir s_driver
   - mkdir s_driver/geckodriver
   - tar -xzf geckodriver-v0.28.0-linux64.tar.gz -C s_driver/geckodriver
   - export PATH=$PATH:$PWD/s_driver/geckodriver
