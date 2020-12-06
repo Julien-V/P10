@@ -12,13 +12,13 @@
 					<p><strong>{% print_tr "auth_fail" %}</strong></p>
 					{% endif %}
 					{% if user.is_authenticated %}
-					<p><strong>{% print_tr "auth_success" %}{{ user.username }} !></strong></p>
+					<p id="auth_success"><strong>{% print_tr "auth_success" %}{{ user.username }} !></strong></p>
 					{% else %}
 					<form id="connection-form" method="post" action="./sign_in">
 	    				{% csrf_token %}
 	    				<input type="text" id="input-username" name="username" placeholder="{% print_tr 'username' %}" autofocus>
 	    				<input type="password" id="input-password" name="password" placeholder="{% print_tr 'password1' %}"></input>
-	    				<input type="submit" value="{% print_tr 'log_in' %}"/>
+	    				<input id="sign_in" type="submit" value="{% print_tr 'log_in' %}"/>
 					</form>
 					<a href="./sign_up"><strong>{% print_tr "sign_up" %}</strong></a>
 					{% endif %}

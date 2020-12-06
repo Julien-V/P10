@@ -31,30 +31,41 @@
             	<span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-3">
+                        <div id="lang-selector">
+                            <img id="current-lang-img" src="/static/assets/img/{% print_tr 'language' %}.png"/>
+                            <div id="lang">
+                            <a id="fr_FR" href="#"><img id="flag-lang-img" src="/static/assets/img/fr_FR.png"/></a>
+                            <a id="en_GB" href="#"><img id="flag-lang-img" src="/static/assets/img/en_GB.png"/></a>
+                            </div>
+                        </div>
+                    </div>
                     <form action="{% url 'search_results' %}" method="get">
                         {% csrf_token %}
                         <input id="navbar-input" name="query" size="12" placeholder="{% print_tr 'search' %}">
                     </form>
                 	{% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="./account">
+                        <a class="nav-link js-scroll-trigger" id="account-link" href="./account">
                             <span id="navbar-icon" class="icon-user"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="./substitute">
+                        <a class="nav-link js-scroll-trigger" id="substitute-link" href="./substitute">
                             <span id="navbar-icon" class="icon-carrot"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="./log_out">
+                        <a class="nav-link js-scroll-trigger" id="sign-out-link" href="./log_out">
                             <span id="navbar-icon" class="icon-sign-out"></span>
                         </a>
                     </li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_in">{% print_tr "log_in" %}</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./sign_up">{% print_tr "sign_up" %}</a></li>
+                    <li class="nav-item"><a id="sign-in-link" class="nav-link js-scroll-trigger" href="./sign_in">{% print_tr "log_in" %}</a></li>
+                    <li class="nav-item"><a id="sign-up-link" class="nav-link js-scroll-trigger" href="./sign_up">{% print_tr "sign_up" %}</a></li>
                     {% endif %}
+                    </div>
                 </ul>
             </div>
         </div>
@@ -69,13 +80,6 @@
                     <a href="./terms">{% print_tr "legals" %}</a>
                 </div>
                 <div class="col-md-4">
-                    <div id="lang-selector">
-                        <img id="current-lang-img" src="/static/assets/img/{% print_tr 'language' %}.png"/>
-                        <div id="lang">
-                        <a id="fr_FR" href="#"><img id="flag-lang-img" src="/static/assets/img/fr_FR.png"/></a>
-                        <a id="en_GB" href="#"><img id="flag-lang-img" src="/static/assets/img/en_GB.png"/></a>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-4">
     			    <a href="./home#contact">{% print_tr "contact" %}</a>

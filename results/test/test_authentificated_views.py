@@ -38,7 +38,7 @@ def test_get_subs(subs_added, django_db_set):
     response = client.get(url)
     assert response.status_code == 200
     page = BeautifulSoup(response.content, features="html.parser")
-    product_col = page.find("div", {'id': 'product-col'})
+    product_col = page.find("div", {'id': 'substitute-col'})
     assert product_col.find("p").contents[0] == "Sveltesse choco noir"
 
 

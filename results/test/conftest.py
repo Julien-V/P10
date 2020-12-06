@@ -41,7 +41,7 @@ def pytest_collection_modifyitems(config, items):
     items[:] = list_items
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def django_db_set(django_db_setup, django_db_blocker):
     """This fixture load data saved with './manage.py dumpdata'
     command"""
@@ -114,8 +114,8 @@ def patch_get_and_load(monkeypatch):
     return json_file
 
 
-@pytest.fixture(scope="module")
-def firefox():
+@pytest.fixture(scope="function")
+def firefox(django_db_set):
     options = webdriver.FirefoxOptions()
     options.add_argument('-headless')
     with webdriver.Firefox(options=options) as driver:

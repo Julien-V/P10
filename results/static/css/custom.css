@@ -84,7 +84,7 @@ p, a {
   	cursor: pointer;
 }
 
-#product-col {
+#product-col, #substitute-col {
 	padding-bottom: 10%;
 }
 

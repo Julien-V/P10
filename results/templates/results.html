@@ -13,7 +13,7 @@
 				<form action="./substitute" method="post">	
 					{% csrf_token %}
 					<input name="code" type="hidden" value='{{ product.code }}'>
-					<button type="submit" class="btn-subs-submit">
+					<button type="submit" class="btn-subs-submit" id="sav-product">
 						<p id="product-save-icon"><i class="fas fa-save"></i> {% print_tr "results_save" %}</p>
 					</button>
 					</form>
